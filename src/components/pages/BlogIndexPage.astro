@@ -1,0 +1,58 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getPostPath, sortPostsByDate } from "../../lib/blog";
+import { localizedPath, useTranslations } from "../../i18n/utils";
+import type { Locale } from "../../i18n/ui";
+import { getCollection } from "astro:content";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const posts = sortPostsByDate(
+  await getCollection("blog", ({ data }) => !data.draft && data.locale === lang),
+);
+---
+
+<Base title={t("blog.title")} description={t("blog.description")} lang={lang}>
+  <section class="space-y-8">
+    <div>
+      <h1 class="text-3xl font-bold text-text-primary">{t("blog.title")}</h1>
+      <p class="mt-2 text-text-muted">{t("blog.description")}</p>
+    </div>
+
+    {
+      posts.length === 0 ? (
+        <p class="text-text-muted">No posts yet.</p>
+      ) : (
+        <ul class="space-y-6">
+          {posts.map((post) => (
+            <li class="rounded-lg border border-border-default bg-surface-secondary p-5">
+              <h2 class="text-xl font-semibold text-text-primary">
+                <a
+                  href={getPostPath(post, lang)}
+                  class="text-text-primary no-underline hover:text-accent"
+                >
+                  {post.data.title}
+                </a>
+              </h2>
+              <p class="mt-2 text-text-muted">{post.data.description}</p>
+              <a
+                href={getPostPath(post, lang)}
+                class="mt-4 inline-flex text-sm font-medium text-accent no-underline"
+              >
+                {t("blog.readMore")}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    <a href={localizedPath(lang, "/")} class="text-sm text-accent no-underline">
+      ← {t("nav.home")}
+    </a>
+  </section>
+</Base>

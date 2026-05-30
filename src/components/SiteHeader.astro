@@ -1,0 +1,49 @@
+---
+import Dropdown from "./ui/Dropdown.astro";
+import ThemeSwitch from "./ui/ThemeSwitch.astro";
+import {
+  getLocaleSwitchUrls,
+  getNavItems,
+  getPathWithoutLocale,
+  useTranslations,
+  type Locale,
+} from "../i18n/utils";
+import seabuckthorn from "../../seabuckthorn.config.ts";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const currentPath = getPathWithoutLocale(Astro.url.pathname, lang);
+const navItems = getNavItems(lang, t);
+const localeItems = getLocaleSwitchUrls(currentPath).map((item) => ({
+  label: item.label,
+  href: item.href,
+}));
+
+const themeLabels = {
+  light: t("theme.light"),
+  dark: t("theme.dark"),
+  "high-contrast": t("theme.highContrast"),
+} as const;
+---
+
+<header class="border-b border-border-default bg-surface-primary">
+  <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-4 py-4">
+    <a href={lang === seabuckthorn.defaultLocale ? "/" : `/${lang}/`} class="text-lg font-semibold text-text-primary no-underline">
+      {t("site.title")}
+    </a>
+
+    <div class="flex flex-wrap items-center gap-3">
+      <Dropdown buttonLabel={t("nav.menu")} items={navItems} />
+      <Dropdown
+        buttonLabel={t("nav.language")}
+        items={localeItems}
+        align="right"
+      />
+      <ThemeSwitch label={t("theme.label")} themeLabels={themeLabels} />
+    </div>
+  </div>
+</header>

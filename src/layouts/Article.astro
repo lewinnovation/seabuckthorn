@@ -1,0 +1,33 @@
+---
+import Base from "./Base.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+interface Props {
+  title: string;
+  description?: string;
+  pubDate?: Date;
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const { title, description, pubDate } = Astro.props;
+---
+
+<Base title={title} description={description} lang={lang}>
+  <article class="prose">
+    {
+      pubDate && (
+        <p class="text-sm text-text-muted">
+          {t("blog.published")}{" "}
+          {pubDate.toLocaleDateString(lang, {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </p>
+      )
+    }
+    <h1>{title}</h1>
+    <slot />
+  </article>
+</Base>

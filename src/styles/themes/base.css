@@ -1,0 +1,73 @@
+/* Primitive tokens */
+:root {
+  --font-family-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+
+  --radius-sm-token: 0.25rem;
+  --radius-md-token: 0.375rem;
+  --radius-lg-token: 0.5rem;
+
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-400: #60a5fa;
+  --color-yellow-400: #facc15;
+  --color-red-600: #dc2626;
+  --color-white: #ffffff;
+  --color-black: #000000;
+}
+
+/* Semantic tokens — light (default) */
+:root,
+[data-theme="light"] {
+  --surface-primary: var(--color-white);
+  --surface-secondary: var(--color-slate-100);
+  --surface-elevated: var(--color-white);
+  --text-primary: var(--color-slate-900);
+  --text-muted: var(--color-slate-700);
+  --border-default: var(--color-slate-200);
+  --focus-ring: var(--color-blue-600);
+  --accent: var(--color-blue-600);
+  --accent-foreground: var(--color-white);
+  --danger: var(--color-red-600);
+  --danger-foreground: var(--color-white);
+  --dialog-overlay: rgb(15 23 42 / 0.45);
+}
+
+[data-theme="dark"] {
+  --surface-primary: var(--color-slate-900);
+  --surface-secondary: var(--color-slate-800);
+  --surface-elevated: var(--color-slate-800);
+  --text-primary: var(--color-slate-50);
+  --text-muted: var(--color-slate-200);
+  --border-default: var(--color-slate-700);
+  --focus-ring: var(--color-blue-400);
+  --accent: var(--color-blue-400);
+  --accent-foreground: var(--color-slate-950);
+  --danger: #f87171;
+  --danger-foreground: var(--color-slate-950);
+  --dialog-overlay: rgb(2 6 23 / 0.7);
+}
+
+[data-theme="high-contrast"] {
+  --surface-primary: var(--color-black);
+  --surface-secondary: var(--color-black);
+  --surface-elevated: var(--color-black);
+  --text-primary: var(--color-white);
+  --text-muted: var(--color-white);
+  --border-default: var(--color-white);
+  --focus-ring: var(--color-yellow-400);
+  --accent: var(--color-yellow-400);
+  --accent-foreground: var(--color-black);
+  --danger: var(--color-yellow-400);
+  --danger-foreground: var(--color-black);
+  --dialog-overlay: rgb(0 0 0 / 0.85);
+}

@@ -1,0 +1,20 @@
+---
+import BlogPostPage from "../../../components/pages/BlogPostPage.astro";
+import { getPostSlug } from "../../../lib/blog";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection(
+    "blog",
+    ({ data }) => !data.draft && data.locale === "de",
+  );
+
+  return posts.map((post) => ({
+    params: { slug: getPostSlug(post) },
+  }));
+}
+
+const { slug } = Astro.params;
+---
+
+<BlogPostPage lang="de" slug={slug!} />

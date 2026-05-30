@@ -1,0 +1,20 @@
+---
+import { Dialog as DialogIsland } from "./react/Dialog";
+
+interface Props {
+  triggerLabel: string;
+  title: string;
+  body: string;
+  closeLabel: string;
+}
+
+const { triggerLabel, title, body, closeLabel } = Astro.props;
+---
+
+<DialogIsland
+  client:visible
+  triggerLabel={triggerLabel}
+  title={title}
+  body={body}
+  closeLabel={closeLabel}
+/>

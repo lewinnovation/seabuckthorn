@@ -1,0 +1,33 @@
+{
+  "name": "seabuckthorn",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^6.0.1",
+    "@astrojs/react": "^5.0.6",
+    "@astrojs/sitemap": "^3.7.3",
+    "@headlessui/react": "^2.2.10",
+    "@headlessui/tailwindcss": "^0.2.2",
+    "@tailwindcss/vite": "^4.3.0",
+    "astro": "^6.4.2",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "tailwindcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.6",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3"
+  }
+}

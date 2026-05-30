@@ -1,0 +1,13 @@
+---
+import { ThemeSwitch as ThemeSwitchIsland } from "./react/ThemeSwitch";
+import type { Theme } from "./react/ThemeSwitch";
+
+interface Props {
+  label: string;
+  themeLabels: Record<Theme, string>;
+}
+
+const { label, themeLabels } = Astro.props;
+---
+
+<ThemeSwitchIsland client:visible label={label} themeLabels={themeLabels} />

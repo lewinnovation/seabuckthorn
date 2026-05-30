@@ -1,0 +1,19 @@
+---
+interface Props {
+  type?: "info" | "warning";
+}
+
+const { type = "info" } = Astro.props;
+---
+
+<aside
+  class:list={[
+    "my-6 rounded-md border px-4 py-3",
+    type === "warning"
+      ? "border-danger bg-surface-secondary text-text-primary"
+      : "border-border-default bg-surface-secondary text-text-primary",
+  ]}
+  role="note"
+>
+  <slot />
+</aside>

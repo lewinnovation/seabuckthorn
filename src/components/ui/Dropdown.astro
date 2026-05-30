@@ -1,0 +1,19 @@
+---
+import { DropdownMenu as DropdownMenuIsland } from "./react/DropdownMenu";
+import type { MenuLinkItem } from "./react/DropdownMenu";
+
+interface Props {
+  buttonLabel: string;
+  items: MenuLinkItem[];
+  align?: "left" | "right";
+}
+
+const { buttonLabel, items, align = "left" } = Astro.props;
+---
+
+<DropdownMenuIsland
+  client:visible
+  buttonLabel={buttonLabel}
+  items={items}
+  align={align}
+/>

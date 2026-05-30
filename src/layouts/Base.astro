@@ -1,0 +1,62 @@
+---
+import "../styles/global.css";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import {
+  getAlternateLinks,
+  getLangFromUrl,
+  getLocaleDir,
+  useTranslations,
+} from "../i18n/utils";
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: ReturnType<typeof getLangFromUrl>;
+}
+
+const lang = Astro.props.lang ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const dir = getLocaleDir(lang);
+const title = Astro.props.title ?? t("site.title");
+const description = Astro.props.description ?? t("site.description");
+const alternateLinks = getAlternateLinks(Astro.url.pathname, lang);
+---
+
+<!doctype html>
+<html lang={lang} dir={dir}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    {
+      alternateLinks.map(({ locale, url }) => (
+        <link rel="alternate" hreflang={locale} href={url} />
+      ))
+    }
+    <link rel="alternate" hreflang="x-default" href={alternateLinks[0]?.url ?? ""} />
+    <script is:inline>
+      (function () {
+        var themes = ["light", "dark", "high-contrast"];
+        var stored = localStorage.getItem("theme");
+        var theme =
+          themes.indexOf(stored) !== -1
+            ? stored
+            : window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t("skip.toContent")}</a>
+      <SiteHeader lang={lang} />
+      <main id="main" class="mx-auto max-w-5xl px-4 py-10">
+        <slot />
+      </main>
+      <SiteFooter lang={lang} />
+  </body>
+</html>

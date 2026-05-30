@@ -1,5 +1,16 @@
 {
   "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "skipLibCheck": true
+  },
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"]
+  "exclude": [
+    "dist",
+    "storybook-static",
+    "node_modules",
+    "**/*.stories.ts",
+    "**/*.stories.tsx",
+    ".storybook",
+    "vitest.config.ts"
+  ]
 }

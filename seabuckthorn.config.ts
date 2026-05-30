@@ -4,6 +4,8 @@ export default {
   defaultLocale: "en",
   cms: "none" as const,
   i18nRouting: "hidden-default" as const,
+  storybook: true,
+  chromatic: false,
   themes: ["light", "dark", "high-contrast"] as const,
   defaultTheme: "light" as const,
 } as const;

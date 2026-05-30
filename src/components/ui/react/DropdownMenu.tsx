@@ -59,3 +59,5 @@ export function DropdownMenu({
     </Menu>
   );
 }
+
+export default DropdownMenu;

@@ -72,3 +72,5 @@ export function ThemeSwitch({ label, themeLabels }: ThemeSwitchProps) {
     </div>
   );
 }
+
+export default ThemeSwitch;

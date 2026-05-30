@@ -6,11 +6,17 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
+    "dev": "concurrently -n astro,sb \"astro dev\" \"storybook dev -p 6006 --no-open\"",
+    "dev:astro": "astro dev",
+    "dev:storybook": "storybook dev -p 6006",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "check": "astro check"
+    "check": "astro sync && tsc --noEmit -p tsconfig.json",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "test:storybook": "vitest run --project=storybook",
+    "postinstall": "playwright install chromium"
   },
   "dependencies": {
     "@astrojs/mdx": "^6.0.1",
@@ -26,8 +32,19 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
+    "@storybook-astro/framework": "^1.2.0",
+    "@storybook/addon-a11y": "^10.4.1",
+    "@storybook/addon-docs": "^10.4.1",
+    "@storybook/addon-vitest": "^10.4.1",
+    "@storybook/builder-vite": "^10.4.1",
+    "@storybook/react": "^10.4.1",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
-    "typescript": "^5.9.3"
+    "@vitest/browser-playwright": "^4.1.7",
+    "concurrently": "^10.0.0",
+    "playwright": "^1.60.0",
+    "storybook": "^10.4.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.7"
   }
 }

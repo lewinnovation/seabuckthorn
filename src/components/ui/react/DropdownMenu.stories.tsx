@@ -5,6 +5,7 @@ import {
   sampleLocaleItems,
   sampleNavItems,
   themeStoryGlobals,
+  keyboardStoryParams,
 } from "../../../storybook/themeVariants";
 
 const meta = {
@@ -36,6 +37,7 @@ export const RightAligned: Story = {
 };
 
 export const Keyboard: Story = {
+  parameters: keyboardStoryParams,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole("button", { name: "Menu" });

@@ -6,6 +6,11 @@ export function themeStoryGlobals(theme: Theme) {
   return { globals: { theme } };
 }
 
+/** Interaction-only stories: skip Chromatic snapshots to avoid flaky captures. */
+export const keyboardStoryParams = {
+  chromatic: { disableSnapshot: true },
+} as const;
+
 export const defaultThemeLabels = {
   light: "Light",
   dark: "Dark",

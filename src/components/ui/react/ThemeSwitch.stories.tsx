@@ -4,6 +4,7 @@ import { ThemeSwitch } from "./ThemeSwitch";
 import {
   defaultThemeLabels,
   themeStoryGlobals,
+  keyboardStoryParams,
 } from "../../../storybook/themeVariants";
 
 const meta = {
@@ -26,6 +27,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const Keyboard: Story = {
+  parameters: keyboardStoryParams,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const toggle = canvas.getByRole("switch", { name: "Theme" });

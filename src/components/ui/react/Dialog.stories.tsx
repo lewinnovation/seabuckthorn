@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, within } from "storybook/test";
 import { Dialog } from "./Dialog";
-import { themeStoryGlobals } from "../../../storybook/themeVariants";
+import { themeStoryGlobals, keyboardStoryParams } from "../../../storybook/themeVariants";
 
 const meta = {
   title: "UI/React/Dialog",
@@ -25,6 +25,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const Keyboard: Story = {
+  parameters: keyboardStoryParams,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const trigger = canvas.getByRole("button", { name: /about this template/i });

@@ -21,6 +21,14 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full architecture and p
 
 See [docs/a11y.md](docs/a11y.md) for story conventions and override policy.
 
+## P2 features
+
+- **Chromatic** — visual regression testing for Storybook stories
+- **Theme baselines** — `Light`, `Dark`, and `HighContrast` snapshot variants
+- **Required PR check** — fails on unreviewed visual changes when `CHROMATIC_PROJECT_TOKEN` is configured
+
+See [docs/chromatic.md](docs/chromatic.md) for setup and accepting visual diffs.
+
 ## Requirements
 
 - Node.js 22.12+
@@ -49,6 +57,8 @@ Run Astro or Storybook alone with `pnpm dev:astro` or `pnpm dev:storybook`.
 | `pnpm storybook` | Storybook dev server |
 | `pnpm build-storybook` | Static Storybook to `storybook-static/` |
 | `pnpm test:storybook` | Vitest browser tests (axe + interaction) |
+| `pnpm chromatic` | Upload Storybook snapshots locally (no fail on changes) |
+| `pnpm chromatic:ci` | Chromatic CI upload (fails on unreviewed visual diffs) |
 | `pnpm build` | Production build to `dist/` |
 | `pnpm preview` | Preview the production build |
 | `pnpm check` | Sync Astro types and run TypeScript (`tsc --noEmit`) |
@@ -90,7 +100,7 @@ Three built-in themes: `light`, `dark`, `high-contrast`. The theme picker persis
 pnpm test:storybook
 ```
 
-CI runs typecheck, Storybook a11y tests, site build, and Storybook build on every push/PR.
+CI runs typecheck, Storybook a11y tests, site build, and Storybook build on every push/PR. When `CHROMATIC_PROJECT_TOKEN` is configured, [`.github/workflows/chromatic.yml`](.github/workflows/chromatic.yml) also runs visual regression tests.
 
 ## Manual verification checklist
 
@@ -103,12 +113,12 @@ CI runs typecheck, Storybook a11y tests, site build, and Storybook build on ever
 - [ ] MDX Callout shortcode renders; draft posts are excluded
 - [ ] `pnpm test:storybook` passes
 - [ ] Storybook theme/locale toolbars update preview
+- [ ] Chromatic Visual Tests panel visible in Storybook (when opted in)
 
 ## Next phases
 
 | Phase | Deliverable |
 |-------|-------------|
-| P2 | Chromatic workflow |
 | P3 | Deploy profile files |
 | P4 | Webiny integration |
 | P5 | `create-seabuckthorn` CLI |

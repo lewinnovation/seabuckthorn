@@ -6,9 +6,11 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import seabuckthorn from "./seabuckthorn.config.ts";
 
+const site = process.env.PUBLIC_SITE_URL ?? "https://example.com";
+
 // https://astro.build/config
 export default defineConfig({
-  site: "https://example.com",
+  site,
   output: "static",
   trailingSlash: "always",
   vite: {

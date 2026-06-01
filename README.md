@@ -29,6 +29,14 @@ See [docs/a11y.md](docs/a11y.md) for story conventions and override policy.
 
 See [docs/chromatic.md](docs/chromatic.md) for setup and accepting visual diffs.
 
+## P3 features
+
+- **Deploy profiles** — Vercel, Netlify, Cloudflare, AWS S3 + CloudFront configs under [`deploy/`](deploy/)
+- **Static-first** — all profiles publish the same `dist/` artifact (no SSR adapters)
+- **AWS CI example** — GitHub Actions OIDC deploy on `main` when secrets are configured
+
+See [docs/deploy.md](docs/deploy.md) for per-host setup and CMS rebuild hooks.
+
 ## Requirements
 
 - Node.js 22.12+
@@ -60,6 +68,8 @@ Run Astro or Storybook alone with `pnpm dev:astro` or `pnpm dev:storybook`.
 | `pnpm chromatic` | Upload Storybook snapshots locally (no fail on changes) |
 | `pnpm chromatic:ci` | Chromatic CI upload (fails on unreviewed visual diffs) |
 | `pnpm build` | Production build to `dist/` |
+| `pnpm deploy:aws` | Sync `dist/` to S3 (+ optional CloudFront invalidation) |
+| `pnpm deploy:cloudflare` | Build and deploy via Wrangler (requires `wrangler` devDep) |
 | `pnpm preview` | Preview the production build |
 | `pnpm check` | Sync Astro types and run TypeScript (`tsc --noEmit`) |
 
@@ -67,6 +77,8 @@ Run Astro or Storybook alone with `pnpm dev:astro` or `pnpm dev:storybook`.
 
 ```
 .storybook/               # Storybook + Vitest setup
+deploy/                   # Host-specific deploy configs (copy to root or use via CI)
+docs/                     # Architecture, a11y, Chromatic, deploy guides
 src/
 ├── components/
 │   ├── content/          # MDX shortcodes (Callout, …)
@@ -84,11 +96,11 @@ src/
 
 ## Configuration
 
-- [`seabuckthorn.config.ts`](seabuckthorn.config.ts) — feature flags and locale/theme defaults
+- [`seabuckthorn.config.ts`](seabuckthorn.config.ts) — feature flags, deploy profile, locale/theme defaults
 - [`astro.config.mjs`](astro.config.mjs) — Astro integrations and i18n routing
-- [`.env.example`](.env.example) — public site URL placeholder
+- [`.env.example`](.env.example) — `PUBLIC_SITE_URL` and optional deploy secrets
 
-Update `site` in `astro.config.mjs` (and `.env`) before deploying.
+Set `PUBLIC_SITE_URL` in `.env` before deploying (used for sitemap and canonical links).
 
 ## Themes
 
@@ -100,7 +112,7 @@ Three built-in themes: `light`, `dark`, `high-contrast`. The theme picker persis
 pnpm test:storybook
 ```
 
-CI runs typecheck, Storybook a11y tests, site build, and Storybook build on every push/PR. When `CHROMATIC_PROJECT_TOKEN` is configured, [`.github/workflows/chromatic.yml`](.github/workflows/chromatic.yml) also runs visual regression tests.
+CI runs typecheck, Storybook a11y tests, site build, and Storybook build on every push/PR. When secrets are configured, [`.github/workflows/chromatic.yml`](.github/workflows/chromatic.yml) runs visual regression tests and [`.github/workflows/deploy-aws.yml`](.github/workflows/deploy-aws.yml) deploys to AWS on pushes to `main`.
 
 ## Manual verification checklist
 
@@ -119,6 +131,5 @@ CI runs typecheck, Storybook a11y tests, site build, and Storybook build on ever
 
 | Phase | Deliverable |
 |-------|-------------|
-| P3 | Deploy profile files |
 | P4 | Webiny integration |
 | P5 | `create-seabuckthorn` CLI |

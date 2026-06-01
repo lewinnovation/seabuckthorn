@@ -3,6 +3,12 @@ export default {
   locales: ["en", "fr", "de"] as const,
   defaultLocale: "en",
   cms: "none" as const,
+  deploy: "static-only" as
+    | "vercel"
+    | "netlify"
+    | "cloudflare"
+    | "aws-s3"
+    | "static-only",
   i18nRouting: "hidden-default" as const,
   storybook: true,
   chromatic: false,

@@ -18,6 +18,8 @@
     "test:storybook": "vitest run --project=storybook",
     "chromatic": "chromatic --exit-zero-on-changes",
     "chromatic:ci": "chromatic",
+    "deploy:aws": "bash deploy/aws/sync.sh",
+    "deploy:cloudflare": "pnpm build && pnpm exec wrangler deploy --config deploy/cloudflare/wrangler.jsonc",
     "postinstall": "playwright install chromium"
   },
   "dependencies": {

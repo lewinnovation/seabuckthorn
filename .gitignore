@@ -7,6 +7,8 @@ storybook-server/
 
 # dependencies
 node_modules/
+packages/create-seabuckthorn/template/
+packages/create-seabuckthorn/dist/
 
 # logs
 npm-debug.log*

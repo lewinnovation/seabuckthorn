@@ -29,6 +29,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Sync CLI template snapshot
+        run: pnpm sync:template
+
+      - name: Build create-seabuckthorn
+        run: pnpm --filter create-seabuckthorn build
+
       - name: Install Playwright browsers
         run: pnpm exec playwright install chromium --with-deps
 

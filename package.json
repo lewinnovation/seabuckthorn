@@ -6,6 +6,9 @@
     "node": ">=22.12.0"
   },
   "scripts": {
+    "sync:template": "node packages/create-seabuckthorn/scripts/sync-template.mjs",
+    "test:cli": "pnpm --filter create-seabuckthorn test",
+    "test:cli": "pnpm --filter create-seabuckthorn test",
     "dev": "concurrently -n astro,sb \"astro dev\" \"storybook dev -p 6006 --no-open\"",
     "dev:astro": "astro dev",
     "dev:storybook": "storybook dev -p 6006",

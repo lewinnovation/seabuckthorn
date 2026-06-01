@@ -1,0 +1,33 @@
+name: CLI smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  scaffold:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Sync template snapshot
+        run: pnpm sync:template
+
+      - name: Build create-seabuckthorn
+        run: pnpm --filter create-seabuckthorn build
+
+      - name: Run CLI unit and integration tests
+        run: pnpm --filter create-seabuckthorn test

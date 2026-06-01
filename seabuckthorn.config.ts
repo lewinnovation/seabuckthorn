@@ -9,7 +9,7 @@ export default {
     | "cloudflare"
     | "aws-s3"
     | "static-only",
-  i18nRouting: "hidden-default" as const,
+  i18nRouting: "hidden-default" as "prefix" | "hidden-default",
   storybook: true,
   chromatic: false,
   themes: ["light", "dark", "high-contrast"] as const,

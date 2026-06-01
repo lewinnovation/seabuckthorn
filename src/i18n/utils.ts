@@ -29,8 +29,10 @@ export function getLocaleDir(lang: Locale): "ltr" | "rtl" {
   return localeMeta[lang].dir;
 }
 
+const prefixDefaultLocale = seabuckthorn.i18nRouting === "prefix";
+
 export function getPathWithoutLocale(pathname: string, lang: Locale): string {
-  if (lang === defaultLocale) {
+  if (!prefixDefaultLocale && lang === defaultLocale) {
     return pathname || "/";
   }
   const prefix = `/${lang}`;
@@ -42,7 +44,7 @@ export function getPathWithoutLocale(pathname: string, lang: Locale): string {
 
 export function localizedPath(locale: Locale, path: string): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;
-  if (locale === defaultLocale) {
+  if (!prefixDefaultLocale && locale === defaultLocale) {
     return normalized === "/" ? "/" : normalized;
   }
   if (normalized === "/") {

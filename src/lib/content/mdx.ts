@@ -6,7 +6,7 @@ import type { BlogPost, ContentSource } from "./types";
 function mapMdxEntry(entry: CollectionEntry<"blog">): BlogPost {
   return {
     slug: getPostSlugFromId(entry.id),
-    locale: entry.data.locale,
+    locale: entry.data.locale as Locale,
     title: entry.data.title,
     description: entry.data.description,
     pubDate: entry.data.pubDate,

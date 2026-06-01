@@ -1,0 +1,40 @@
+{
+  "name": "create-seabuckthorn",
+  "version": "0.1.0",
+  "description": "Scaffold a Seabuckthorn Astro site with i18n, themes, Storybook, and optional Webiny CMS",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "create-seabuckthorn": "./dist/index.mjs"
+  },
+  "files": [
+    "dist",
+    "template",
+    "scaffold"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean",
+    "dev": "tsup src/index.ts --format esm --watch",
+    "sync-template": "node scripts/sync-template.mjs",
+    "prepublishOnly": "pnpm run sync-template && pnpm run build",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.10.1",
+    "execa": "^9.5.2",
+    "fast-glob": "^3.3.3",
+    "fs-extra": "^11.3.0",
+    "ts-morph": "^25.0.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.13.10",
+    "tsup": "^8.4.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.7"
+  }
+}

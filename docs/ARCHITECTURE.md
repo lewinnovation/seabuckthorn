@@ -667,7 +667,7 @@ Each profile documents:
 | **Custom CLI (citty/giget)** | Full flag surface | More maintenance |
 | **Turborepo + generators** | Good for org monorepos | Heavier |
 
-**Recommendation:** Start as **`create-astro` compatible template** with `template.config.js` prompts; evolve to custom CLI if flags proliferate.
+**Delivered (P5):** **`create-seabuckthorn`** in `packages/create-seabuckthorn` — copies a template snapshot and applies scaffold transforms (`@clack/prompts`, `ts-morph`). Raw clone without transforms: `pnpm create astro@latest my-site -- --template <org>/seabuckthorn`. See [scaffold.md](scaffold.md).
 
 ### 11.2 `seabuckthorn.config.ts` (generated)
 
@@ -745,7 +745,7 @@ flowchart LR
 | **P2** | Chromatic workflow + docs |
 | **P3** | Deploy profile files + AWS S3 example |
 | **P4** | Webiny integration package + webhook docs |
-| **P5** | `create-seabuckthorn` CLI polish + example site |
+| **P5** | `create-seabuckthorn` CLI + reference demo + GitHub Pages deploy |
 
 ---
 

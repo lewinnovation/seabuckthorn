@@ -2,11 +2,15 @@ import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 import seabuckthorn from "../seabuckthorn.config.ts";
 
+const localeEnum = z.enum(
+  seabuckthorn.locales as unknown as [string, ...string[]],
+);
+
 const blogSchema = z.object({
   title: z.string(),
   description: z.string(),
   pubDate: z.coerce.date(),
-  locale: z.enum(["en", "fr", "de"]),
+  locale: localeEnum,
   draft: z.boolean().default(false),
   cover: z
     .object({

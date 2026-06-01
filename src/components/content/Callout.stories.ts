@@ -17,7 +17,7 @@ export const Info = {
     ...args,
     slots: {
       default:
-        "P0 ships MDX content collections, locale-aware routing, and design tokens.",
+        "MDX content collections, locale-aware routing, and design tokens are included.",
     },
   }),
 };

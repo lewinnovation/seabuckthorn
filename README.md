@@ -2,7 +2,19 @@
 
 Production-oriented [Astro](https://astro.build) project template with built-in i18n, design tokens, MDX content collections, and Headless UI islands.
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full architecture and phased delivery plan.
+## Create a new project
+
+```bash
+pnpm create seabuckthorn@latest my-site
+cd my-site
+pnpm dev
+```
+
+See [docs/scaffold.md](docs/scaffold.md) for flags, i18n routing modes, and non-interactive usage.
+
+This repository is the **reference template** and demo site. Contributors work here directly; consumers use `create-seabuckthorn` to copy and customize a new project.
+
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full architecture.
 
 ## P0 features
 
@@ -44,6 +56,16 @@ See [docs/deploy.md](docs/deploy.md) for per-host setup and CMS rebuild hooks.
 - **Webhook docs** — rebuild static site on Webiny publish via deploy hooks
 
 Default is `cms: "none"` (local MDX). See [docs/webiny.md](docs/webiny.md).
+
+## P5 features
+
+- **`create-seabuckthorn` CLI** — interactive scaffolding with locale, CMS, deploy, and theme options
+- **Template snapshot** — `pnpm sync:template` copies this repo into the publishable CLI package
+- **CLI smoke CI** — scaffold + production build verified on every PR
+
+See [docs/scaffold.md](docs/scaffold.md).
+
+When GitHub Pages is enabled for this repository, pushes to `main` deploy the reference site via [`.github/workflows/deploy-demo.yml`](.github/workflows/deploy-demo.yml) (project URL: `https://<owner>.github.io/seabuckthorn/`).
 
 ## Requirements
 
@@ -137,8 +159,10 @@ CI runs typecheck, Storybook a11y tests, site build, and Storybook build on ever
 - [ ] Storybook theme/locale toolbars update preview
 - [ ] Chromatic Visual Tests panel visible in Storybook (when opted in)
 
-## Next phases
+## Contributing to the CLI
 
-| Phase | Deliverable |
-|-------|-------------|
-| P5 | `create-seabuckthorn` CLI |
+```bash
+pnpm sync:template
+pnpm --filter create-seabuckthorn build
+pnpm --filter create-seabuckthorn test
+```

@@ -1,3 +1,5 @@
+import seabuckthorn from "../../seabuckthorn.config.ts";
+import { defaultLocale } from "../i18n/ui";
 import type { BlogPost } from "./content/types";
 import type { Locale } from "../i18n/ui";
 
@@ -12,7 +14,8 @@ export function getPostSlug(entry: { id: string }): string {
 }
 
 export function getPostPath(post: BlogPost, locale: Locale): string {
-  if (locale === "en") {
+  const prefixDefault = seabuckthorn.i18nRouting === "prefix";
+  if (!prefixDefault && locale === defaultLocale) {
     return `/blog/${post.slug}/`;
   }
   return `/${locale}/blog/${post.slug}/`;

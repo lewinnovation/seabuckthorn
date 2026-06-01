@@ -7,10 +7,13 @@ import { defineConfig } from "astro/config";
 import seabuckthorn from "./seabuckthorn.config.ts";
 
 const site = process.env.PUBLIC_SITE_URL ?? "https://example.com";
+/** Set for GitHub Pages project sites, e.g. ASTRO_BASE=/seabuckthorn/ */
+const base = process.env.ASTRO_BASE ?? "/";
 
 // https://astro.build/config
 export default defineConfig({
   site,
+  base,
   output: "static",
   trailingSlash: "always",
   vite: {
@@ -21,11 +24,12 @@ export default defineConfig({
     locales: [...seabuckthorn.locales],
     defaultLocale: seabuckthorn.defaultLocale,
     routing: {
-      prefixDefaultLocale: false,
+      prefixDefaultLocale: seabuckthorn.i18nRouting === "prefix",
     },
-    fallback: {
-      fr: "en",
-      de: "en",
-    },
+    fallback: Object.fromEntries(
+      seabuckthorn.locales
+        .filter((locale) => locale !== seabuckthorn.defaultLocale)
+        .map((locale) => [locale, seabuckthorn.defaultLocale]),
+    ),
   },
 });

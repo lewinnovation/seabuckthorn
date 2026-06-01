@@ -37,6 +37,14 @@ See [docs/chromatic.md](docs/chromatic.md) for setup and accepting visual diffs.
 
 See [docs/deploy.md](docs/deploy.md) for per-host setup and CMS rebuild hooks.
 
+## P4 features
+
+- **Optional Webiny CMS** — build-time GraphQL fetch for blog posts (`cms: "webiny"`)
+- **ContentSource adapter** — swap MDX collections or Webiny without changing page routes
+- **Webhook docs** — rebuild static site on Webiny publish via deploy hooks
+
+Default is `cms: "none"` (local MDX). See [docs/webiny.md](docs/webiny.md).
+
 ## Requirements
 
 - Node.js 22.12+
@@ -78,16 +86,18 @@ Run Astro or Storybook alone with `pnpm dev:astro` or `pnpm dev:storybook`.
 ```
 .storybook/               # Storybook + Vitest setup
 deploy/                   # Host-specific deploy configs (copy to root or use via CI)
-docs/                     # Architecture, a11y, Chromatic, deploy guides
+docs/                     # Architecture, a11y, Chromatic, deploy, Webiny guides
 src/
+├── integrations/webiny/  # Optional Webiny GraphQL client + source
 ├── components/
 │   ├── content/          # MDX shortcodes (Callout, …)
 │   ├── pages/            # Shared page compositions
 │   └── ui/
 │       ├── react/        # Headless UI islands + *.stories.tsx
 │       └── *.astro       # Thin island shells
-├── content/blog/         # Per-locale MDX posts (en/, fr/, de/)
+├── content/blog/         # Per-locale MDX posts when cms: "none"
 ├── i18n/                 # ui.ts string tables + helpers
+├── lib/content/          # ContentSource adapter (MDX vs Webiny)
 ├── layouts/              # Base.astro, Article.astro
 ├── pages/                # Locale routes
 ├── storybook/            # Shared story helpers (theme variants)
@@ -96,7 +106,7 @@ src/
 
 ## Configuration
 
-- [`seabuckthorn.config.ts`](seabuckthorn.config.ts) — feature flags, deploy profile, locale/theme defaults
+- [`seabuckthorn.config.ts`](seabuckthorn.config.ts) — feature flags, CMS mode (`none` | `webiny`), deploy profile
 - [`astro.config.mjs`](astro.config.mjs) — Astro integrations and i18n routing
 - [`.env.example`](.env.example) — `PUBLIC_SITE_URL` and optional deploy secrets
 
@@ -131,5 +141,4 @@ CI runs typecheck, Storybook a11y tests, site build, and Storybook build on ever
 
 | Phase | Deliverable |
 |-------|-------------|
-| P4 | Webiny integration |
 | P5 | `create-seabuckthorn` CLI |

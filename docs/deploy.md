@@ -135,13 +135,13 @@ Attach a policy allowing `s3:PutObject`, `s3:DeleteObject`, `s3:ListBucket` on t
 
 ## CMS rebuild hooks
 
-When you add a headless CMS (Webiny in P4), configure the host to rebuild on content changes:
+When using Webiny (`cms: "webiny"`) or another headless CMS, configure the host to rebuild on content changes:
 
-1. Create a **deploy hook** or **build hook** in your host's dashboard (Netlify, Vercel, Cloudflare Pages, etc.).
-2. Paste the hook URL into your CMS webhook settings.
-3. Optionally protect the hook with a shared secret header.
+1. Create a **deploy hook** or **build hook** in your host's dashboard (see per-host sections above).
+2. In **Webiny Admin → Settings → Webhooks**, add a webhook for `entry.afterPublish` pointing at that hook URL.
+3. Optionally protect the hook with a shared secret header validated by the host.
 
-Webiny-specific webhook setup is documented in P4.
+Full Webiny setup (content model, API keys, webhook details): [webiny.md](webiny.md).
 
 ## SSR upgrade path
 
@@ -157,3 +157,4 @@ The default template does not enable SSR.
 
 - [Architecture §10 — Deployment](ARCHITECTURE.md#10-deployment-architecture)
 - [Deploy profiles index](../deploy/README.md)
+- [Webiny Headless CMS integration](webiny.md)

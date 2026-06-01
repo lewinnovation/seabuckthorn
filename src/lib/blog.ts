@@ -1,21 +1,23 @@
-import type { CollectionEntry } from "astro:content";
+import type { BlogPost } from "./content/types";
 import type { Locale } from "../i18n/ui";
 
-export function getPostSlug(entry: CollectionEntry<"blog">): string {
-  const segments = entry.id.replace(/\.(md|mdx)$/, "").split("/");
+export function getPostSlugFromId(id: string): string {
+  const segments = id.replace(/\.(md|mdx)$/, "").split("/");
   return segments.slice(1).join("/") || segments[segments.length - 1]!;
 }
 
-export function getPostPath(entry: CollectionEntry<"blog">, locale: Locale): string {
-  const slug = getPostSlug(entry);
-  if (locale === "en") {
-    return `/blog/${slug}/`;
-  }
-  return `/${locale}/blog/${slug}/`;
+/** @deprecated Use getPostSlugFromId or post.slug from BlogPost */
+export function getPostSlug(entry: { id: string }): string {
+  return getPostSlugFromId(entry.id);
 }
 
-export function sortPostsByDate<T extends { data: { pubDate: Date } }>(posts: T[]): T[] {
-  return [...posts].sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-  );
+export function getPostPath(post: BlogPost, locale: Locale): string {
+  if (locale === "en") {
+    return `/blog/${post.slug}/`;
+  }
+  return `/${locale}/blog/${post.slug}/`;
+}
+
+export function sortPostsByDate(posts: BlogPost[]): BlogPost[] {
+  return [...posts].sort((a, b) => b.pubDate.valueOf() - a.pubDate.valueOf());
 }

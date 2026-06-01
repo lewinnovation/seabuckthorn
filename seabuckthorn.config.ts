@@ -2,7 +2,7 @@ export default {
   siteName: "Seabuckthorn",
   locales: ["en", "fr", "de"] as const,
   defaultLocale: "en",
-  cms: "none" as const,
+  cms: "none" as "none" | "webiny",
   deploy: "static-only" as
     | "vercel"
     | "netlify"

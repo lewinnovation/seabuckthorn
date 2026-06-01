@@ -1,9 +1,9 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { getPostPath, sortPostsByDate } from "../../lib/blog";
+import { getBlogSource } from "../../lib/content";
 import { localizedPath, useTranslations } from "../../i18n/utils";
 import type { Locale } from "../../i18n/ui";
-import { getCollection } from "astro:content";
 
 interface Props {
   lang: Locale;
@@ -11,9 +11,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const posts = sortPostsByDate(
-  await getCollection("blog", ({ data }) => !data.draft && data.locale === lang),
-);
+const posts = sortPostsByDate(await getBlogSource().list(lang));
 ---
 
 <Base title={t("blog.title")} description={t("blog.description")} lang={lang}>
@@ -35,10 +33,10 @@ const posts = sortPostsByDate(
                   href={getPostPath(post, lang)}
                   class="text-text-primary no-underline hover:text-accent"
                 >
-                  {post.data.title}
+                  {post.title}
                 </a>
               </h2>
-              <p class="mt-2 text-text-muted">{post.data.description}</p>
+              <p class="mt-2 text-text-muted">{post.description}</p>
               <a
                 href={getPostPath(post, lang)}
                 class="mt-4 inline-flex text-sm font-medium text-accent no-underline"

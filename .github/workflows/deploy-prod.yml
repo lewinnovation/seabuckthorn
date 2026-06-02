@@ -1,0 +1,15 @@
+name: Deploy production
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    if: ${{ secrets.AWS_ROLE_ARN != '' && secrets.AWS_S3_BUCKET != '' }}
+    uses: ./.github/workflows/reusable-deploy-aws.yml
+    with:
+      environment: production
+    secrets:
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+      AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+      AWS_CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}

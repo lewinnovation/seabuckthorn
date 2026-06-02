@@ -4,7 +4,6 @@ import ThemeSwitch from "./ui/ThemeSwitch.astro";
 import {
   getLocaleSwitchUrls,
   getNavItems,
-  getPathWithoutLocale,
   useTranslations,
   type Locale,
 } from "../i18n/utils";
@@ -16,9 +15,8 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const currentPath = getPathWithoutLocale(Astro.url.pathname, lang);
 const navItems = getNavItems(lang, t);
-const localeItems = getLocaleSwitchUrls(currentPath).map((item) => ({
+const localeItems = getLocaleSwitchUrls(Astro.url.pathname, lang).map((item) => ({
   label: item.label,
   href: item.href,
 }));

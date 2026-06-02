@@ -1,5 +1,6 @@
 export interface WebinyPostRecord {
   slug: string;
+  translationKey?: string | null;
   title: string;
   description: string;
   pubDate: string;

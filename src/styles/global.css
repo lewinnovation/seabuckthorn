@@ -2,6 +2,7 @@
 @plugin "@headlessui/tailwindcss";
 
 @import "./themes/base.css";
+@import "./themes/brand.generated.css";
 
 @theme {
   --color-surface-primary: var(--surface-primary);

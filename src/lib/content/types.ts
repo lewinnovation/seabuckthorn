@@ -3,6 +3,7 @@ import type { Locale } from "../../i18n/ui";
 
 export interface BlogPost {
   slug: string;
+  translationKey: string;
   locale: Locale;
   title: string;
   description: string;

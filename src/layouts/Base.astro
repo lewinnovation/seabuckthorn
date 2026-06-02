@@ -8,6 +8,10 @@ import {
   getLocaleDir,
   useTranslations,
 } from "../i18n/utils";
+import seabuckthorn from "../../seabuckthorn.config.ts";
+
+const themeList = JSON.stringify([...seabuckthorn.themes]);
+const defaultTheme = seabuckthorn.defaultTheme;
 
 interface Props {
   title?: string;
@@ -16,6 +20,12 @@ interface Props {
 }
 
 const lang = Astro.props.lang ?? getLangFromUrl(Astro.url);
+
+const localeStyleModules = import.meta.glob("../styles/locales/*.css");
+const localeStyleLoader =
+  localeStyleModules[`../styles/locales/${lang}.css`];
+if (localeStyleLoader) await localeStyleLoader();
+
 const t = useTranslations(lang);
 const dir = getLocaleDir(lang);
 const title = Astro.props.title ?? t("site.title");
@@ -37,16 +47,16 @@ const alternateLinks = getAlternateLinks(Astro.url.pathname, lang);
       ))
     }
     <link rel="alternate" hreflang="x-default" href={alternateLinks[0]?.url ?? ""} />
-    <script is:inline>
+    <script is:inline define:vars={{ themeList, defaultTheme }}>
       (function () {
-        var themes = ["light", "dark", "high-contrast"];
+        var themes = JSON.parse(themeList);
         var stored = localStorage.getItem("theme");
         var theme =
           themes.indexOf(stored) !== -1
             ? stored
             : window.matchMedia("(prefers-color-scheme: dark)").matches
               ? "dark"
-              : "light";
+              : defaultTheme;
         document.documentElement.dataset.theme = theme;
       })();
     </script>

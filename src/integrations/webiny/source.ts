@@ -12,6 +12,7 @@ function mapWebinyPost(record: WebinyPostRecord, locale: Locale): BlogPost {
 
   return {
     slug: record.slug,
+    translationKey: record.translationKey ?? record.slug,
     locale,
     title: record.title,
     description: record.description,

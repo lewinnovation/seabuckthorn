@@ -11,6 +11,10 @@ const blogSchema = z.object({
   description: z.string(),
   pubDate: z.coerce.date(),
   locale: localeEnum,
+  /** Links equivalent posts across locales for hreflang and locale switcher */
+  translationKey: z.string(),
+  /** URL path segment for this locale; falls back to filename when omitted */
+  urlSlug: z.string().optional(),
   draft: z.boolean().default(false),
   cover: z
     .object({
@@ -31,4 +35,21 @@ const blog = defineCollection({
   schema: blogSchema,
 });
 
-export const collections = { blog };
+const pagesSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  locale: localeEnum,
+  translationKey: z.string(),
+  urlSlug: z.string().optional(),
+  draft: z.boolean().default(false),
+});
+
+const pages = defineCollection({
+  loader: glob({
+    base: "./src/content/pages",
+    pattern: "**/*.{md,mdx}",
+  }),
+  schema: pagesSchema,
+});
+
+export const collections = { blog, pages };

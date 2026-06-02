@@ -2,7 +2,8 @@
 import Base from "../../layouts/Base.astro";
 import { getPostPath, sortPostsByDate } from "../../lib/blog";
 import { getBlogSource } from "../../lib/content";
-import { localizedPath, useTranslations } from "../../i18n/utils";
+import { useTranslations } from "../../i18n/utils";
+import { getStaticRoutePath } from "../../lib/i18n/resolve-path";
 import type { Locale } from "../../i18n/ui";
 
 interface Props {
@@ -49,7 +50,7 @@ const posts = sortPostsByDate(await getBlogSource().list(lang));
       )
     }
 
-    <a href={localizedPath(lang, "/")} class="text-sm text-accent no-underline">
+    <a href={getStaticRoutePath("home", lang)} class="text-sm text-accent no-underline">
       ← {t("nav.home")}
     </a>
   </section>

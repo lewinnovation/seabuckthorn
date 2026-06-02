@@ -1,0 +1,3 @@
+site_id        = "demo"
+domain_name    = "uat-demo.bepossible.dev"
+hosted_zone_id = "Z000000000000000000000"

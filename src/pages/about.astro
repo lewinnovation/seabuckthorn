@@ -1,0 +1,10 @@
+---
+import SitePage from "../components/pages/SitePage.astro";
+import { listPages } from "../lib/content/pages-mdx";
+
+const pages = await listPages("en");
+const page = pages.find((p) => p.slug === "about");
+if (!page) throw new Error("Missing English about page");
+---
+
+<SitePage lang="en" page={page} />

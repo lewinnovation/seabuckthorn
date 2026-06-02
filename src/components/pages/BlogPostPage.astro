@@ -3,7 +3,8 @@ import Article from "../../layouts/Article.astro";
 import Callout from "../content/Callout.astro";
 import type { BlogPost } from "../../lib/content/types";
 import { renderMarkdownToHtml } from "../../lib/markdown";
-import { localizedPath, useTranslations } from "../../i18n/utils";
+import { useTranslations } from "../../i18n/utils";
+import { getStaticRoutePath } from "../../lib/i18n/resolve-path";
 import type { Locale } from "../../i18n/ui";
 import { render } from "astro:content";
 
@@ -39,7 +40,7 @@ if (post.bodyFormat === "mdx" && post.mdxEntry) {
     )
   }
   <p class="mt-8">
-    <a href={localizedPath(lang, "/blog/")} class="text-accent no-underline">
+    <a href={getStaticRoutePath("blog", lang)} class="text-accent no-underline">
       ← {t("blog.back")}
     </a>
   </p>

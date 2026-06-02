@@ -73,6 +73,44 @@ This runs `pnpm build` and deploys using [`deploy/cloudflare/wrangler.jsonc`](..
 
 ## AWS S3 + CloudFront
 
+### Infrastructure (Terraform)
+
+Provision isolated stacks per environment (**LEW-269**, **LEW-270**):
+
+| Environment | Example domain | Terraform root |
+|-------------|----------------|----------------|
+| test | `test-{site}.bepossible.dev` | [`infra/terraform/live/test`](../infra/terraform/live/test) |
+| uat | `uat-{site}.bepossible.dev` | [`infra/terraform/live/uat`](../infra/terraform/live/uat) |
+| prod | Client domain | [`infra/terraform/live/prod`](../infra/terraform/live/prod) |
+
+See [`infra/terraform/README.md`](../infra/terraform/README.md). Each environment uses separate S3 buckets and CloudFront distributions.
+
+### Multi-environment CI/CD
+
+GitHub Environments (`test`, `uat`, `production`) should each define:
+
+- `AWS_ROLE_ARN`
+- `AWS_S3_BUCKET`
+- `AWS_CLOUDFRONT_DISTRIBUTION_ID` (optional)
+- `PUBLIC_SITE_URL`
+
+| Workflow | Trigger | Target |
+|----------|---------|--------|
+| `deploy-test.yml` | Push to `develop` | `test` |
+| `deploy-uat.yml` | Push to `release/*` | `uat` |
+| `deploy-prod.yml` | Manual `workflow_dispatch` | `production` (enable protection rules) |
+
+Build and deploy are split jobs; deploy downloads the `dist/` artifact from the build job.
+
+### Market-specific builds
+
+For regulatory market overrides (**LEW-275**):
+
+```bash
+MARKET=at pnpm build
+pnpm deploy:aws
+```
+
 ### Local deploy
 
 ```bash

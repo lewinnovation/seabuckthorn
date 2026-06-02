@@ -5,6 +5,8 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import seabuckthorn from "./seabuckthorn.config.ts";
+import { seabuckthornBuildIntegration } from "./src/integrations/seabuckthorn-build/index.ts";
+import { brandThemePlugin } from "./src/integrations/brand-theme.ts";
 
 const site = process.env.PUBLIC_SITE_URL ?? "https://example.com";
 /** Set for GitHub Pages project sites, e.g. ASTRO_BASE=/seabuckthorn/ */
@@ -17,9 +19,9 @@ export default defineConfig({
   output: "static",
   trailingSlash: "always",
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [tailwindcss(), brandThemePlugin()],
   },
-  integrations: [mdx(), react(), sitemap()],
+  integrations: [mdx(), react(), sitemap(), seabuckthornBuildIntegration()],
   i18n: {
     locales: [...seabuckthorn.locales],
     defaultLocale: seabuckthorn.defaultLocale,

@@ -1,4 +1,3 @@
-import { getAbsoluteLocaleUrl } from "astro:i18n";
 import seabuckthorn from "../../seabuckthorn.config.ts";
 import {
   defaultLocale,
@@ -8,6 +7,7 @@ import {
   type Locale,
   type UiKey,
 } from "./ui.ts";
+import { resolveLocalizedUrls, getStaticRoutePath } from "../lib/i18n/resolve-path";
 
 export { defaultLocale, localeMeta, locales, ui, type Locale, type UiKey };
 
@@ -53,27 +53,30 @@ export function localizedPath(locale: Locale, path: string): string {
   return `/${locale}${normalized}`;
 }
 
-export function getLocaleSwitchUrls(currentPath: string) {
-  return locales.map((locale) => ({
+export function getLocaleSwitchUrls(pathname: string, lang: Locale) {
+  const resolved = resolveLocalizedUrls(pathname, lang);
+  return resolved.map(({ locale, href }) => ({
     locale,
     label: localeMeta[locale].label,
-    href: getAbsoluteLocaleUrl(locale, currentPath),
+    href,
   }));
 }
 
 export function getAlternateLinks(pathname: string, lang: Locale) {
-  const currentPath = getPathWithoutLocale(pathname, lang);
-  return locales.map((locale) => ({
+  return resolveLocalizedUrls(pathname, lang).map(({ locale, href }) => ({
     locale,
-    url: getAbsoluteLocaleUrl(locale, currentPath),
+    url: href,
   }));
 }
 
 export function getNavItems(lang: Locale, t: ReturnType<typeof useTranslations>) {
   return [
-    { label: t("nav.home"), href: localizedPath(lang, "/") },
-    { label: t("nav.blog"), href: localizedPath(lang, "/blog/") },
-    { label: t("nav.about"), href: localizedPath(lang, "/#about") },
+    { label: t("nav.home"), href: getStaticRoutePath("home", lang) },
+    { label: t("nav.blog"), href: getStaticRoutePath("blog", lang) },
+    {
+      label: t("nav.about"),
+      href: getStaticRoutePath("about", lang),
+    },
   ];
 }
 

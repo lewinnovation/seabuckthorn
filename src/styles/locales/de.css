@@ -1,0 +1,4 @@
+/* Optional per-locale overrides (loaded when rendering German pages) */
+:root {
+  letter-spacing: 0.01em;
+}

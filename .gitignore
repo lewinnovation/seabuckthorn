@@ -4,6 +4,7 @@ storybook-static/
 storybook-server/
 # generated types
 .astro/
+src/generated/
 
 # dependencies
 node_modules/
